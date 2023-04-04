@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zss.dao.RolePermissionDao">
+    <sql id="columns">
+        select id, role_id, permission_id, create_time, update_time, is_deleted
+            from acl_role_permission
+    </sql>
+   <!--根据id查询已分配的权限 List<Long> findPermissionsByRolerId(Long roleId);-->
+    <select id="findPermissionsByRolerId" resultType="java.lang.Long">
+        select permission_id
+        from acl_role_permission
+        where role_id = #{roleId} and is_deleted = 0
+    </select>
+    <!--    void deleteByRoleId(Long roleId);-->
+    <update id="deleteByRoleId">
+        update acl_role_permission set is_deleted = 1
+        where role_id = #{roleId}
+    </update>
+    <!--    void insertByRoleIdAndPermissionId(@Param("roleId") Long roleId,@Param("permissionId") Long permissionId);-->
+    <insert id="insertByRoleIdAndPermissionId">
+        insert into acl_role_permission(role_id,permission_id)
+        values (#{roleId},#{permissionId})
+    </insert>
+</mapper>

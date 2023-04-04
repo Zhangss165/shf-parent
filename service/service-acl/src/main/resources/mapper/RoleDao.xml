@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zss.dao.RoleDao">
+    <sql id="columns">
+        select id,role_code,role_name,description,create_time,update_time,is_deleted
+    </sql>
+    <sql id="findPageWhere">
+        <where>
+            <if test="roleName != null and roleName != ''">
+                 role_name like  "%"#{roleName}"%" and
+            </if>
+                 is_deleted = 0
+        </where>
+    </sql>
+   <!-- List<Role> findAll();-->
+    <select id="findAll" resultType="com.zss.entity.Role">
+        <include refid="columns"/>
+        from acl_role
+        where is_deleted = 0
+    </select>
+    <!--Integer insert(Role role);-->
+    <insert id="insert">
+        insert into acl_role(id,role_name,role_code,description)
+            values (#{id},#{roleName},#{roleCode},#{description})
+    </insert>
+   <!-- void delete(Integer roleId); 因为这个是不是物理上的删除，让is_delete为1-->
+    <update id="delete">
+        update acl_role set is_deleted = 1
+        where id = #{roleId}
+    </update>
+    <!--Role getById(Integer roleId); 根据id获取role对象-->
+    <select id="getById" resultType="role">
+        <include refid="columns"/>
+        from acl_role
+        where id = #{roleId}
+    </select>
+   <!-- Integer update(Role role);-->
+    <update id="update">
+        update acl_role
+        <set>
+            <if test="roleName != null and roleName != ''">
+                role_name = #{roleName},
+            </if>
+            <if test="roleCode != null and roleCode != ''">
+                role_code = #{roleCode},
+            </if>
+            <if test="description != null and description != ''">
+                description = #{description},
+            </if>
+            update_time = now()
+        </set>
+        where id = #{id}
+    </update>
+
+    <!--List<Role> findPage(Map<String, Object> filters);-->
+        <select id="findPage" resultType="role">
+            <include refid="columns"/>
+            from acl_role
+            <include refid="findPageWhere"/>
+            order by id desc
+        </select>
+</mapper>

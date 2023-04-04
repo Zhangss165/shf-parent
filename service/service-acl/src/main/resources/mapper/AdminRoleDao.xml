@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zss.dao.AdminRoleDao">
+
+    <!-- 用于select查询公用抽取的列 -->
+    <sql id="columns">
+        select id, role_id, admin_id, create_time, update_time, is_deleted
+        from acl_admin_role
+    </sql>
+    <!--Map<String, Object> findRoleByAdminId(Long adminId);  -->
+    <select id="findRoleByAdminId" resultType="java.lang.Long">
+        select role_id
+        from acl_admin_role
+        where  admin_id =#{adminId} and is_deleted = 0
+    </select>
+
+    <!--void deleteByAdminId(Long adminId); -->
+    <update id="deleteByAdminId">
+        update acl_admin_role set is_deleted = 1
+        where admin_id = #{adminId}
+    </update>
+
+<!-- void insertAdminIdAndRoleId(@Param("roleId") Long roleId,@Param("adminId")Long adminId); -->
+    <insert id="insertAdminIdAndRoleId" useGeneratedKeys="true" keyProperty="id">
+        insert into acl_admin_role ( role_id , admin_id)
+        values (#{roleId} , #{adminId} )
+    </insert>
+
+</mapper>

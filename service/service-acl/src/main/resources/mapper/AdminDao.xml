@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zss.dao.AdminDao">
+
+    <!-- 用于select查询公用抽取的列 -->
+    <sql id="columns">
+        select id,username,password,name,phone,head_url,description,create_time,update_time,is_deleted
+        from acl_admin
+    </sql>
+
+    <insert id="insert" >
+        insert into acl_admin (
+            id ,
+            username ,
+            password ,
+            name ,
+            phone ,
+            head_url
+        ) values (
+                     #{id} ,
+                     #{username} ,
+                     #{password} ,
+                     #{name} ,
+                     #{phone} ,
+                     #{headUrl}
+                 )
+    </insert>
+
+    <update id="update" >
+        update acl_admin set
+        <if test="name != null and name != ''">
+            name = #{name} ,
+        </if>
+        <if test="phone != null and phone != ''">
+            phone = #{phone} ,
+        </if>
+            <!--这个更新url是为了上传头像的 -->
+        <if test="headUrl != null and headUrl != ''">
+            head_url = #{headUrl} ,
+        </if>
+
+        update_time =  now()
+        where id = #{id}
+    </update>
+
+    <update id="delete">
+        update acl_admin set
+        update_time = now() ,
+        is_deleted = 1
+        where
+            id = #{id}
+    </update>
+
+    <select id="getById" resultType="Admin">
+        <include refid="columns" />
+        where
+        id = #{id}
+    </select>
+
+    <sql id="findPageWhere">
+        <where>
+            <if test="username != null and username != ''">
+                and username like CONCAT('%',#{username},'%')
+            </if>
+            <if test="name != null and name != ''">
+                and name like CONCAT('%',#{name},'%')
+            </if>
+            <if test="phone != null and phone != ''">
+                and phone like CONCAT('%',#{phone},'%')
+            </if>
+            <if test="createTimeBegin != null and createTimeBegin != ''">
+                and create_time >= #{createTimeBegin}
+            </if>
+            <if test="createTimeEnd != null and createTimeEnd != ''">
+                and create_time &lt;= #{createTimeEnd}
+            </if>
+            and is_deleted = 0
+        </where>
+    </sql>
+
+    <select id="findPage" resultType="Admin">
+        <include refid="columns" />
+        <include refid="findPageWhere"/>
+        order by id desc
+    </select>
+
+   <!-- List<Admin> findAll();-->
+    <select id="findAll" resultType="Admin">
+        <include refid="columns"/>
+        where is_deleted = 0
+    </select>
+    <select id="getByUsername" resultType="com.zss.entity.Admin">
+        <include refid="columns"/>
+        where username = #{username}
+        and is_deleted = 0
+    </select>
+</mapper>

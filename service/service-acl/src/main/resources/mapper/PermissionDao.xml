@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zss.dao.PermissionDao">
+    <sql id="columns">
+        select id, parent_id, name, url, code, type, sort, create_time, update_time, is_deleted
+            from acl_permission
+    </sql>
+   <!-- List<Permission> findAll();-->
+    <select id="findAll" resultType="com.zss.entity.Permission">
+        <include refid="columns"/>
+        where is_deleted = 0
+    </select>
+    <!--List<Permission> findPermissionsByAdminId(Long adminId);-->
+    <select id="findPermissionsByAdminId" resultType="com.zss.entity.Permission">
+        select
+            distinct c.*
+        from acl_admin_role a
+                 inner join acl_role_permission b on b.role_id = a.role_id
+                 inner join acl_permission c on c.id = b.permission_id
+        where
+            a.admin_id = #{adminId}
+          and c.type = 1
+          and a.is_deleted = 0
+          and b.is_deleted = 0
+          and c.is_deleted = 0
+    </select>
+    <select id="getById" resultType="permission">
+        <include refid="columns"/>
+        where id = #{id}
+    </select>
+    <insert id="insert">
+        insert into acl_permission(id, parent_id, name, url, code, type, sort)
+        values (#{id}, #{parentId}, #{name},#{url},#{code}, #{type}, #{sort})
+    </insert>
+    <update id="delete">
+        update acl_permission
+        set is_deleted = 1
+        where id = #{id}
+    </update>
+    <update id="update">
+        update acl_permission
+        <set>
+            <if test="parentId != null">
+                parentId = #{parentId} ,
+            </if>
+            <if test="name != null">
+                name = #{name} ,
+            </if>
+            <if test="url != null">
+                url = #{url} ,
+            </if>
+            <if test="code != null">
+                code = #{code} ,
+            </if>
+            <if test="type != null">
+                type = #{type} ,
+            </if>
+            <if test="sort != null">
+                sort = #{sort}
+            </if>
+        </set>
+            where id = #{id} and
+                is_deleted = 0
+            order by id desc
+    </update>
+
+<!--    //查询所有的code权限-->
+<!--    List<String> getAllCodes();-->
+    <select id="getAllCodes" resultType="java.lang.String">
+        select code
+        from acl_permission
+        where type = 2 and is_deleted = 0
+    </select>
+<!--    //根据id 查询权限-->
+<!--    List<String> findCodesByAdminId(Long id);-->
+    <select id="findCodesByAdminId" resultType="java.lang.String">
+        select
+            distinct c.code
+        from acl_admin_role a
+                 inner join acl_role_permission b on b.role_id = a.role_id
+                 inner join acl_permission c on c.id = b.permission_id
+        where
+            a.admin_id = #{adminId}
+          and c.type = 1
+          and a.is_deleted = 0
+          and b.is_deleted = 0
+          and c.is_deleted = 0
+    </select>
+</mapper>

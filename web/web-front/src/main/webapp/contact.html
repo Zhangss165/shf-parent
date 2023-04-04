@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head> <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+  <meta name="Author" contect="http://www.webqin.net">
+  <title>宜好居</title>
+  <link rel="shortcut icon" href="./static/images/favicon.ico"/>
+  <link type="text/css" href="./static/css/css.css" rel="stylesheet"/>
+  <script type="text/javascript" src="./static/js/jquery.js"></script>
+  <script type="text/javascript" src="./static/js/js.js"></script>
+  <script src="./static/js/vue.js"></script>
+  <script src="./static/js/axios.js"></script>
+  <script type="text/javascript">
+    $(function () {
+      //导航定位
+      $(".nav li:eq(0)").addClass("navCur");
+    })
+  </script>
+  <meta charset="UTF-8">
+  <title>联系我们</title>
+  <style>
+    .in {
+      margin: 0;
+      padding: 0;
+      font-family: Arial, sans-serif;
+      background-color: #f5f5f5;
+    }
+
+    header {
+      background-color:#1c9ab3;
+      color: #fff;
+      padding: 20px;
+    }
+
+    .container {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      padding: 40px;
+    }
+
+    .section {
+      width: 100%;
+      margin-bottom: 40px;
+      background-color: #fff;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+      padding: 20px;
+      border-radius: 5px;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: 36px;
+      font-weight: bold;
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    h2 {
+      font-size: 24px;
+      font-weight: bold;
+      margin-bottom: 20px;
+    }
+
+    p {
+      line-height: 1.5;
+      margin-bottom: 20px;
+    }
+
+    #agent {
+      margin: 0;
+      padding: 0;
+      list-style: none;
+      margin-bottom: 20px;
+    }
+
+
+    .ui {
+      margin-bottom: 10px;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 10px;
+      font-weight: bold;
+    }
+
+    input, textarea {
+      display: block;
+      box-sizing: border-box;
+      width: 100%;
+      padding: 10px;
+      border: 2px solid #ccc;
+      border-radius: 5px;
+      margin-bottom: 20px;
+      font-size: 16px;
+    }
+
+    button {
+      background-color: #333;
+      color: #fff;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 16px;
+    }
+
+    button:hover {
+      background-color: #555;
+    }
+
+    @media screen and (min-width: 768px) {
+      .container {
+        padding: 40px 100px;
+      }
+
+      .section {
+        width: 45%;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<div id="list">
+  <div class="header">
+    <div class="width1190">
+      <div class="fl">您好，欢迎来到宜好居！</div>
+
+      <div class="fr" v-if="userInfo.nickName == ''">
+        <a href="index.html">首页</a>
+      </div>
+      <div class="clears"></div>
+    </div><!--width1190/-->
+  </div>
+  <div class="banner" style="background:url(./static/images/ban.jpg) center center no-repeat;"></div>
+</div>
+<div class="in">
+  <header>
+    <h1>联系我们</h1>
+  </header>
+  <div class="container">
+    <section class="section">
+      <h2>地址</h2>
+      <p>河南省郑州市马寨镇</p>
+        <ul >
+          <li >电话：166-3791-2104</li>
+          <li >邮箱：zhang165741@gmail.com</li>
+        </ul><br>
+      <p>欢迎您到线下与我们咨询业务或者与我们的面对面交流。我们将为您提供最优质的服务和咨询。</p>
+    </section>
+    <section class="section">
+      <h2>在线留言</h2>
+      <form>
+        <label for="name">姓名：</label>
+        <input type="text" id="name" name="name" required>
+        <label for="email">邮箱：</label>
+        <input type="email" id="email" name="email" required>
+        <label for="message">留言：</label>
+        <textarea id="message" name="message" required></textarea>
+        <button type="submit">提交</button>
+      </form>
+    </section>
+  </div>
+</div>
+</body>
+</html>
