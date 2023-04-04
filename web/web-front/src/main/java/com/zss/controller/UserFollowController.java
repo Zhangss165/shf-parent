@@ -39,7 +39,7 @@ public class UserFollowController extends BaseController<UserFollow>{
     public Result findListPage(@PathVariable Integer pageNum,
                                @PathVariable Integer pageSize,
                                HttpServletRequest request) {
-        UserInfo userInfo = (UserInfo)request.getSession().getAttribute("USER");
+        UserInfo userInfo = (UserInfo)request.getSession().getAttribute("user");
         Long userId = userInfo.getId();
         PageInfo<UserFollowVo> pageInfo = userFollowService.findListPage(pageNum, pageSize, userId);
         return Result.ok(pageInfo);

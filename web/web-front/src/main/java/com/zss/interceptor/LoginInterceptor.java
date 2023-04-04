@@ -22,7 +22,7 @@ import javax.servlet.http.HttpServletResponse;
 public class LoginInterceptor implements HandlerInterceptor {
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
-       UserInfo userInfo = (UserInfo) request.getSession().getAttribute("USER");
+       UserInfo userInfo = (UserInfo) request.getSession().getAttribute("user");
         if (null == userInfo) {
             Result result = Result.build("没有登录", ResultCodeEnum.LOGIN_AUTH);
             WebUtil.writeJSON(response, result);
