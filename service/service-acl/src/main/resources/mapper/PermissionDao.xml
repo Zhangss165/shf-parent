@@ -26,7 +26,7 @@
           and b.is_deleted = 0
           and c.is_deleted = 0
     </select>
-    <select id="getById" resultType="permission">
+    <select id="getById" resultType="com.zss.entity.Permission">
         <include refid="columns"/>
         where id = #{id}
     </select>
