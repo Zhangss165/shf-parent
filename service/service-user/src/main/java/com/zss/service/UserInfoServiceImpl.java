@@ -32,4 +32,3 @@ public class UserInfoServiceImpl extends BaseServiceImpl<UserInfo> implements Us
         return userInfoDao.getByPhone(phone);
     }
 }
-fgx

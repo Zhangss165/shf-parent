@@ -64,7 +64,7 @@ public class HousesController {
         map.put("houseImage1List",houseImage1List);
         //设置默认的关注方式
 //        map.put("isFollow",false);
-        UserInfo userInfo = (UserInfo) request.getSession().getAttribute("USER");
+        UserInfo userInfo = (UserInfo) request.getSession().getAttribute("user");
         Boolean isFollow = false;
         if (null != userInfo) {
             isFollow = userFollowService.getIsFollow(userInfo.getId(),id);

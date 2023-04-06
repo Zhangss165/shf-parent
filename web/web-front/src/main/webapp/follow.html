@@ -46,7 +46,7 @@
             </div><!--list/-->
             <ul class="nav">
                 <li><a href="index.html">首页</a></li>
-                <li><a href="about.html">关于我们</a></li>
+                <li><a href="contact.html">关于我们</a></li>
                 <li><a href="contact.html">联系我们</a></li>
                 <div class="clears"></div>
             </ul><!--nav/-->
@@ -87,7 +87,7 @@
                         <dd>
                             <h3><a :href="'info.html?id='+item.houseId">{{ item.name }}</a></h3>
                             <div class="guantext">{{ item.buildArea }}平 {{ item.houseTypeName}} {{ item.floorName}} {{ item.directionName}}</div>
-                            <div class="guantext2">关注时间：{{ item.createTimeString}}    <a href="javascript:;" class="qxgz" @click="cancelFollow(item.id)">取消关注</a></div>
+                            <div class="guantext2">关注时间：{{ item.createTime}}    <a href="javascript:;" class="qxgz" @click="cancelFollow(item.id)">取消关注</a></div>
                         </dd>
                         <div class="price">¥ <strong>{{ item.totalPrice }}</strong><span class="font12">万元</span></div>
                         <div class="clearfix"></div>
@@ -189,6 +189,7 @@
                     }
                 });
             },
+
             cancelFollow(id) {
                 var that = this
                 axios.get('/userFollow/auth/cancelFollow/'+id).then(response => {

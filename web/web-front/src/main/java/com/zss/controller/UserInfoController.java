@@ -9,10 +9,7 @@ import com.zss.service.UserInfoService;
 import com.zss.util.MD5;
 import com.zss.vo.LoginVo;
 import com.zss.vo.RegisterVo;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;
@@ -27,6 +24,8 @@ import java.util.Map;
  */
 @RestController
 @RequestMapping("/userInfo")
+@CrossOrigin
+@SuppressWarnings({"unchecked", "rawtypes"})
 public class UserInfoController extends BaseController<UserInfo>{
 
     @Reference
